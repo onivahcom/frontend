@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <!-- Glow for the rings and diamond -->
+    <filter id="ringGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="white" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- Solid Black Background -->
+  <rect width="64" height="64" rx="12" fill="#000000" />
+
+  <!-- Left Ring -->
+  <circle
+    cx="26"
+    cy="34"
+    r="13"
+    fill="none"
+    stroke="white"
+    stroke-width="3"
+    filter="url(#ringGlow)"
+  />
+
+  <!-- Right Ring -->
+  <circle
+    cx="38"
+    cy="30"
+    r="13"
+    fill="none"
+    stroke="white"
+    stroke-width="3"
+    filter="url(#ringGlow)"
+  />
+
+  <!-- Smaller Diamond above Right Ring -->
+  <polygon
+    points="38,10 35.5,15 38,17 40.5,15"
+    fill="white"
+    stroke="white"
+    stroke-width="0.8"
+    filter="url(#ringGlow)"
+  />
+</svg>

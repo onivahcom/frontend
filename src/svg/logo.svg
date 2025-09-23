@@ -1,0 +1,14 @@
+  <svg width="160" height="60" viewBox="0 0 260 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                <circle cx="60" cy="55" r="25" stroke="#6D4D94" strokeWidth="3" fill="none" />
+
+                                <circle cx="95" cy="45" r="25" stroke="#e4c6ff" strokeWidth="3" fill="none" />
+
+                                <polygon points="95,12 90,22 95,27 100,22" fill="#EFB7B7" stroke="#EFB7B7" strokeWidth="1" />
+                                <line x1="95" y1="12" x2="95" y2="27" stroke="#fff" strokeWidth="0.6" />
+                                <line x1="90" y1="22" x2="100" y2="22" stroke="#fff" strokeWidth="0.6" />
+
+                                <text x="135" y="60" font-family="'Playfair Display', serif" font-size="26" font-weight="600" fill="#6D4D94" letter-spacing="1">
+  Onivah
+</text>
+
+                            </svg>
