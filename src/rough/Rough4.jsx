@@ -60,7 +60,7 @@ export default function VendorServicePage() {
         },
     ];
 
-    const fullText = `Escape to a peaceful beachside retreat with breathtaking ocean views. Enjoy fully air-conditioned rooms, modern amenities, a private patio, and easy access to local attractions. Perfect for a relaxing getaway with friends or family, combining comfort, styles, and convenience.`;
+    const fullText = `Escape to a peaceful beachside retreat with breathtaking ocean views. Enjoy fully air-conditioned rooms, modern amenities, a private patio, and easy access to local attractions. Perfect for a relaxing getaway with friends or family, combining comfort, style, and convenience.`;
 
     const showReadMore = fullText.length
 
