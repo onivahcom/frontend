@@ -21,9 +21,9 @@ jobs:
           key: ${{ secrets.VPS_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /var/www/frontend || git clone https://github.com/onivahcom/frontend.git /var/www/frontend && cd /var/www/frontend
-            git reset --hard
-            git pull origin main
+            sudo rm -rf /var/www/frontend
+            git clone https://github.com/onivahcom/frontend.git /var/www/frontend
+            cd /var/www/frontend
             npm install --legacy-peer-deps
             CI=false npm run build
             sudo systemctl reload nginx
