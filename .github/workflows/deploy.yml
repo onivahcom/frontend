@@ -3,40 +3,24 @@ name: Deploy Frontend to VPS
 on:
   push:
     branches:
-      - main  # deploy only on main branch
+      - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout the repo
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      # 3. Install dependencies
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
-
-      # 4. Build the frontend
-      - name: Build frontend
-        run: CI=false npm run build
-
-      # 5. Deploy to VPS
-      - name: Deploy to VPS
+      - name: Deploy & Build on VPS
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_PRIVATE_KEY }}
           port: 22
-    script: |
+          script: |
             cd /var/www/frontend || git clone https://github.com/onivahcom/frontend.git /var/www/frontend && cd /var/www/frontend
             git reset --hard
             git pull origin main
