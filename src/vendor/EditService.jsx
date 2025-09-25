@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Grid, Typography, Container, Box, Button, Skeleton, InputLabel, Select, MenuItem, FormControl, Chip, Alert } from '@mui/material';
+import { Grid, Typography, Container, Box, Button, Skeleton, InputLabel, Select, MenuItem, FormControl, Chip, Alert, CardContent, Card, Avatar } from '@mui/material';
 import axios from 'axios';
 import { apiUrl, backendApi } from '../Api/Api';
 import withLoadingAndError from '../hoc/withLoadingAndError';
@@ -18,6 +18,7 @@ import WhyChooseUs from '../utils/DetailedServicePageSections/WhyChooseUs';
 import EditWhyUsModal from '../vendorUtils/EditWhyUsModal';
 import EditOfferingsModal from '../vendorUtils/EditOfferingsModal';
 import EditFieldsModal from '../vendorUtils/EditFieldsModal';
+import VerifiedUser from '@mui/icons-material/VerifiedUser';
 
 
 const EditService = ({ loading, setLoading, error, setError, }) => {
@@ -227,15 +228,8 @@ const EditService = ({ loading, setLoading, error, setError, }) => {
 
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
 
-                    <Grid container sx={{ p: { xs: 2, md: 5 } }} maxWidth='lg'>
+                    <Grid container sx={{ p: { xs: 2, md: 1 } }} maxWidth='xl'>
 
-                        {/* Business Name */}
-
-                        <Grid item xs={12} md={6} sx={{ mb: 2 }}>
-                            <Typography variant="h6" paragraph sx={{ mb: 0 }}>
-                                {serviceDetails.additionalFields?.businessName}
-                            </Typography>
-                        </Grid>
 
                         {/* Alert */}
                         <Grid item xs={12} md={6} sx={{ mb: 2 }}>
@@ -271,257 +265,236 @@ const EditService = ({ loading, setLoading, error, setError, }) => {
                         </Grid>
 
                         {/*  images */}
-                        <Grid item xs={12} md={12} sx={{ mb: 2, p: 0 }}>
-                            <ImageSection previewImages={previewImages} allImageUrls={allImageUrls} images={images} />
-                        </Grid>
+                        {/* <Grid item xs={12} md={12} sx={{ mb: 2, p: 0 }}> */}
+                        <ImageSection previewImages={previewImages} allImageUrls={allImageUrls} images={images} />
+                        {/* </Grid> */}
 
-                        {/* service descrption */}
-                        <Grid item xs={12} md={8}>
-                            <Typography variant="body1" fontWeight={500} mb={1}>
-                                About {serviceDetails.additionalFields?.businessName}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                {serviceDetails.additionalFields?.description}
-                            </Typography>
-
-                            <Alert
-                                severity="warning"
-                                variant="outlined"
+                        <Grid item xs={12} md={4}>
+                            <Card
                                 sx={{
-                                    fontSize: '0.75rem',
-                                    fontStyle: 'italic',
-                                    maxWidth: 400,
-                                    borderRadius: 2,
-                                    backgroundColor: '#fff8e1', // light warning yellow
-                                    mt: { xs: 1, md: 2 },
-                                    mb: 1
+                                    height: "100%",
+                                    borderRadius: 4,
+                                    p: 3,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    bgcolor: "grey.50",
+                                    boxShadow: 0,
                                 }}
+                                elevation={0}
                             >
-                                Note: You can edit description.
-                                <Button
-                                    size='small'
-                                    endIcon={<Edit />}
-                                    variant="text"
-                                    color='info'
-                                    onClick={() => {
-                                        setOpenDescription(true);
-                                        setDescription(serviceDetails?.additionalFields?.description);
-                                    }}
-                                    sx={{
-                                        borderRadius: 2,
-                                        width: 'fit-content',
-                                        textTransform: "none",
-                                    }}
-                                >
-                                    Edit Description
-                                </Button>
-                            </Alert>
-
-                            {/* host card */}
-                            <HostCard vendorDetails={serviceDetails?.vendorDetails} amenities={serviceDetails.additionalFields?.amenities} />
-
-                            <EditDescriptionModal
-                                open={openDescription}
-                                handleClose={() => setOpenDescription(false)}
-                                initialValue={description}
-                                onSave={handleSave}
-                            />
-
-                            <Divider sx={{ margin: '10px 0' }} />
-
-                            {/* highlights */}
-                            <Box mt={4}>
-                                <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                                    <Typography variant="body2" fontWeight={500} gutterBottom sx={{ mb: 0 }}>
-                                        Highlights
+                                <CardContent sx={{ p: 0 }}>
+                                    {/* Service Title */}
+                                    <Typography
+                                        variant="h4"
+                                        fontWeight={700}
+                                        gutterBottom
+                                        sx={{ lineHeight: 1.2 }}
+                                    >
+                                        {serviceDetails.additionalFields.businessName}
                                     </Typography>
 
-                                    {serviceDetails.additionalFields.customFields.length > 0 && (
-                                        <Button
-                                            endIcon={<NavigateNext />}
-                                            variant="text"
-                                            size="small"
-                                            onClick={scrollToDetails}
-                                            sx={{
-                                                px: 2,
-                                                py: 0.5,
-                                                color: "royalblue",
-                                                borderColor: "royalblue",
-                                                borderRadius: 2,
-                                                fontSize: '0.75rem',
-                                                textTransform: 'none',
-                                                transition: 'all 0.2s ease',
-                                                '&:hover': {
-                                                    backgroundColor: 'rgba(65, 105, 225, 0.1)', // light royal blue bg
-                                                    borderColor: 'royalblue'
-                                                }
-                                            }}
-                                        >
-                                            View Additional Details
-                                        </Button>
-                                    )}
-                                </Box>
+                                    {/* Host Info */}
+                                    <Box display="flex" alignItems="center" gap={1} mb={2}>
+                                        <Avatar
+                                            src="https://placehold.co/300"
+                                            alt="Host"
+                                            sx={{ width: 32, height: 32 }}
+                                        />
+                                        <Typography variant="body1" fontWeight={600}>
+                                            Hosted by You
+                                        </Typography>
+                                        <VerifiedUser fontSize="small" />
+                                    </Box>
 
-                                {serviceDetails.additionalFields.customFields.length > 0 && (
-                                    <>
-                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
-                                            {serviceDetails.additionalFields.customFields.slice(0, 3).map((field, index) => (
-                                                <Chip
-                                                    key={index}
-                                                    label={field.name || `Custom Field ${index + 1}`}
-                                                    variant="outlined"
-                                                    sx={{
-                                                        backgroundColor: 'white',
-                                                        fontSize: '0.75rem',
-                                                        color: 'black',
-                                                        borderRadius: 2,
-
-                                                    }}
-                                                />
-                                            ))}
-                                        </Box>
-                                    </>
-                                )}
-                            </Box>
-
-                        </Grid>
-
-                        {/* booking summary */}
-                        <Grid item xs={12} sm={4} sx={{ mb: 2, p: { xs: 1, md: 2 } }}>
-                            <Box
-                                sx={{
-                                    p: { xs: 1, md: 2 },
-                                    borderRadius: 2,
-                                    backgroundColor: '#f5f2ffc4',
-                                    border: "1px solid #eeee",
-                                }}
-                            >
-                                <img src={allImageUrls[0]} style={{ width: "100%", height: isMobile ? "120px" : "200px", objectFit: "cover", borderRadius: '10px', }} />
-
-                                <Grid container spacing={2} mt={2}>
-                                    <Grid item xs={6}>
-                                        <Typography variant="subtitle2" color="text.secondary">Start Date</Typography>
+                                    {/* Short Description */}
+                                    <Box sx={{ mb: 2 }}>
                                         <Typography
                                             variant="body2"
-                                            fontWeight={500}
-                                            sx={{ cursor: !parsedChoice?.datesChoosed?.length ? "pointer" : "default", color: !parsedChoice?.datesChoosed?.length ? "primary.main" : "inherit" }}
-                                            onClick={() => {
-                                                if (!parsedChoice?.datesChoosed?.length && bookingRef?.current) {
-                                                    bookingRef.current.scrollIntoView({ behavior: "smooth" });
-                                                }
-                                            }}
+                                            color="text.secondary"
                                         >
-                                            {parsedChoice?.datesChoosed?.[0]
-                                                ? format(parseISO(parsedChoice.datesChoosed[0]), "dd MMM yyyy")
-                                                : "Choose Date"}
+                                            {serviceDetails.additionalFields?.description.slice(0, 150)}...
                                         </Typography>
-                                    </Grid>
 
-                                    <Grid item xs={6}>
-                                        <Typography variant="subtitle2" color="text.secondary">End Date</Typography>
-                                        <Typography
-                                            variant="body2"
-                                            fontWeight={500}
-                                            sx={{ cursor: !parsedChoice?.datesChoosed?.length ? "pointer" : "default", color: !parsedChoice?.datesChoosed?.length ? "primary.main" : "inherit" }}
-                                            onClick={() => {
-                                                if (!parsedChoice?.datesChoosed?.length && bookingRef?.current) {
-                                                    bookingRef.current.scrollIntoView({ behavior: "smooth" });
-                                                }
-                                            }}
-                                        >
-                                            {parsedChoice?.datesChoosed?.at(-1)
-                                                ? format(parseISO(parsedChoice.datesChoosed.at(-1)), "dd MMM yyyy")
-                                                : "Choose Date"}
-                                        </Typography>
-                                    </Grid>
+                                    </Box>
 
-                                    <Grid item xs={6}>
-                                        <Typography variant="subtitle2" color="text.secondary">Days</Typography>
-                                        <Typography variant="body2" fontWeight={500}>
-                                            {parsedChoice.datesChoosed.length}</Typography>
-
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Typography variant="subtitle2" color="text.secondary">Price/Day</Typography>
-                                        <Typography variant="body2" fontWeight={500}>
-                                            ₹{serviceDetails.additionalFields.priceRange}</Typography>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <FormControl fullWidth size="small" sx={{ my: 1 }}>
-                                            <InputLabel id="location-label">Select Location</InputLabel>
-                                            <Select
-                                                labelId="location-label"
-                                                label="Select Location"
-                                                defaultValue={
-                                                    parsedChoice.location?.[0] ||
-                                                    serviceDetails.additionalFields.availableLocations?.[0] || ""
-                                                }
-                                                onChange={(e) => {
-                                                    const selectedLocation = e.target.value;
-
-                                                    // Get current customerChoice
-                                                    const currentChoice = JSON.parse(localStorage.getItem("customerChoice")) || {};
-
-                                                    // Update location field with selected value in an array
-                                                    const updatedChoice = {
-                                                        ...currentChoice,
-                                                        location: [selectedLocation],
-                                                    };
-
-                                                    localStorage.setItem("customerChoice", JSON.stringify(updatedChoice));
+                                    {/* Quick Highlights */}
+                                    <Grid container spacing={1.5} alignItems="center">
+                                        {/* Verified */}
+                                        <Grid item xs="auto">
+                                            <Chip
+                                                icon={<CheckCircle />}
+                                                label="Verified"
+                                                size="small"
+                                                variant="outlined"
+                                                sx={{
+                                                    borderColor: "primary.main",
+                                                    color: "primary.main",
+                                                    fontWeight: 500,
+                                                    letterSpacing: 0.5,
+                                                    "& .MuiChip-icon": {
+                                                        color: "primary.main",
+                                                    },
                                                 }}
-                                            >
-                                                {serviceDetails.additionalFields.availableLocations?.map((loc, index) => (
-                                                    <MenuItem key={index} value={loc}>
-                                                        {loc}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
+                                            />
+                                        </Grid>
+
+                                        {/* Rating & Reviews */}
+                                        <Grid item xs="auto">
+                                            <Chip
+                                                label="4.8 (120 Reviews)"
+                                                size="small"
+                                                variant="outlined"
+                                                sx={{
+                                                    borderColor: "primary.main",
+                                                    color: "primary.main",
+                                                    fontWeight: 500,
+                                                }}
+                                            />
+                                        </Grid>
+
+                                        {/* Highlight / Top Rated */}
+                                        <Grid item xs="auto">
+                                            <Chip
+                                                label="Top Rated"
+                                                size="small"
+                                                variant="filled"
+                                                sx={{
+                                                    bgcolor: "primary.main",
+                                                    color: "white",
+                                                    fontWeight: 500,
+                                                    textTransform: "capitalize",
+                                                }}
+                                            />
+                                        </Grid>
                                     </Grid>
 
-                                </Grid>
+                                </CardContent>
 
-
-
-                                <Box
+                                <Alert
+                                    severity="warning"
+                                    variant="outlined"
                                     sx={{
-                                        p: 2,
-                                        borderRadius: 1,
-                                        textAlign: 'center',
+                                        fontSize: '0.75rem',
+                                        fontStyle: 'italic',
+                                        maxWidth: 400,
+                                        borderRadius: 2,
+                                        backgroundColor: '#fff8e1', // light warning yellow
+                                        mt: { xs: 1, md: 2 },
+                                        mb: 1
                                     }}
                                 >
+                                    Note: You can edit description.
                                     <Button
-                                        variant="contained"
-                                        color="primary"
-                                        startIcon={<CheckCircle />}
+                                        size='small'
+                                        endIcon={<Edit />}
+                                        variant="text"
+                                        color='info'
+                                        onClick={() => {
+                                            setOpenDescription(true);
+                                            setDescription(serviceDetails?.additionalFields?.description);
+                                        }}
                                         sx={{
-                                            // maxWidth: 300,
-                                            height: "50%",
-                                            borderRadius: "10px",
-                                            // width: 'fit-content',
-                                            fontWeight: 600,
-                                            background: "linear-gradient(45deg, #6d4d94, #9b59b6)",
-                                            color: "#fff",
-                                            transition: "0.3s ease",
-                                            '&:hover': {
-                                                background: "linear-gradient(45deg, #5a3e7b, #884ea0)",
-                                                transform: "scale(1.02)",
-                                            },
-                                            boxShadow: "0 4px 10px rgba(0,0,0,0.15)"
+                                            borderRadius: 2,
+                                            width: 'fit-content',
+                                            textTransform: "none",
                                         }}
                                     >
-                                        Reserve
+                                        Edit Description
                                     </Button>
-
-                                </Box>
-                            </Box>
+                                </Alert>
+                            </Card>
                         </Grid>
 
-                        <Divider sx={{ py: 3 }} />
+                        <EditDescriptionModal
+                            open={openDescription}
+                            handleClose={() => setOpenDescription(false)}
+                            initialValue={description}
+                            onSave={handleSave}
+                        />
+
+                        {/* service descrption */}
+                        {serviceDetails.additionalFields?.customFields?.length > 0 && (
+                            <Grid item xs={12}>
+                                <Card
+                                    sx={{
+                                        borderRadius: 4,
+                                        display: "flex",
+                                        flexDirection: { xs: "column", sm: "row" },
+                                        flexWrap: "wrap",
+                                        gap: 1,
+                                        p: 1,
+                                        boxShadow: 0,
+                                        bgcolor: "background.paper",
+                                    }}
+                                >
+                                    {serviceDetails.additionalFields?.customFields.map((h, i) => (
+                                        <Box
+                                            key={i}
+                                            sx={{
+                                                flex: { xs: "1 1 100%", sm: "1 1 calc(25% - 8px)" }, // responsive width
+                                                py: 3,
+                                                px: 2,
+                                                textAlign: "center",
+                                                borderRadius: 3,
+                                                bgcolor: "#f9f9f9",
+                                                transition: "all 0.3s ease",
+                                                "&:hover": {
+                                                    transform: "translateY(-3px)",
+                                                    bgcolor: "grey.100",
+                                                    cursor: "pointer",
+                                                },
+                                            }}
+                                        >
+                                            <Typography fontWeight={600} variant="body2">
+                                                {h.name}
+                                            </Typography>
+                                        </Box>
+                                    ))}
+                                </Card>
+                            </Grid>
+
+                        )}
+
+
+                        {/* Amenities */}
+                        {serviceDetails.additionalFields?.amenities?.length > 0 && (
+                            <Grid item xs={12}>
+                                <Card
+                                    sx={{
+                                        borderRadius: 4,
+                                        p: 3,
+                                        bgcolor: "background.paper",
+                                        boxShadow: 0,
+                                    }}
+                                    elevation={0}
+                                >
+                                    <Typography variant="h6" mb={2} fontWeight={600}>
+                                        Amenities
+                                    </Typography>
+                                    <Box display="flex" gap={1.2} flexWrap="wrap">
+                                        {serviceDetails.additionalFields.amenities.map(
+                                            (a, i) => (
+                                                <Chip
+                                                    key={i}
+                                                    label={a}
+                                                    sx={{
+                                                        borderRadius: "20px",
+                                                        px: 1.5,
+                                                        fontWeight: 500,
+                                                        bgcolor: "grey.100",
+                                                        "&:hover": { bgcolor: "grey.200" },
+                                                    }}
+                                                />
+                                            )
+                                        )}
+                                    </Box>
+                                </Card>
+                            </Grid>
+                        )}
+
 
                         {/* pricing */}
-
                         <Box
                             sx={{
                                 display: "flex",
@@ -562,9 +535,9 @@ const EditService = ({ loading, setLoading, error, setError, }) => {
                         </Box>
                         {
                             serviceDetails.additionalFields?.customPricing?.length > 0 &&
-                            <Box ref={detailsRef} sx={{ width: "100%" }}>
-                                <CustomPricing pricings={customPricing || []} />
-                            </Box>
+                            <CustomPricing ref={detailsRef} pricings={serviceDetails.additionalFields?.customPricing || []}
+                            // onSelect={(pkg) => setSelectedPackage(pkg)} 
+                            />
                         }
                         <EditOfferingsModal
                             open={openOfferings}
@@ -618,6 +591,7 @@ const EditService = ({ loading, setLoading, error, setError, }) => {
                                 <CustomFields fields={customFields || []} />
                             </Box>
                         }
+
                         <EditFieldsModal
                             open={openFields}
                             handleClose={() => setFieldsOpen(false)}
@@ -626,42 +600,37 @@ const EditService = ({ loading, setLoading, error, setError, }) => {
                         />
 
                         {/* view availablity */}
-                        <Grid sx={{ mt: 5, }} item xs={12} sm={6} md={8} lg={8} ref={bookingRef}
-                        >
-                            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'start', mb: 5 }}>
+                        <Grid item xs={12} md={6}>
 
-                                <Alert
-                                    severity="warning"
-                                    variant="outlined"
+                            <Alert
+                                severity="warning"
+                                variant="outlined"
+                                sx={{
+                                    fontSize: '0.75rem',
+                                    fontStyle: 'italic',
+                                    maxWidth: 400,
+                                    borderRadius: 2,
+                                    backgroundColor: '#fff8e1', // light warning yellow
+                                    mt: { xs: 1, md: 0 },
+                                    mb: 2
+                                }}
+                            >
+                                Note: You can manage your booking availability by setting the days and time slots you're open for appointments.
+                                <Button
+                                    size='small'
+                                    endIcon={<Edit />}
+                                    variant="text"
+                                    color='info'
+                                    onClick={handleAvailability}
                                     sx={{
-                                        fontSize: '0.75rem',
-                                        fontStyle: 'italic',
-                                        maxWidth: 400,
                                         borderRadius: 2,
-                                        backgroundColor: '#fff8e1', // light warning yellow
-                                        mt: { xs: 1, md: 0 }
+                                        width: 'fit-content',
+                                        textTransform: "none",
                                     }}
                                 >
-                                    Note: You can manage your booking availability by setting the days and time slots you're open for appointments.
-                                    <Button
-                                        size='small'
-                                        endIcon={<Edit />}
-                                        variant="text"
-                                        color='info'
-                                        onClick={handleAvailability}
-                                        sx={{
-                                            borderRadius: 2,
-                                            width: 'fit-content',
-                                            textTransform: "none",
-                                        }}
-                                    >
-                                        Manage Availability
-                                    </Button>
-                                </Alert>
-
-
-                            </Box>
-
+                                    Manage Availability
+                                </Button>
+                            </Alert>
 
                             <DateStorer onDateChange={handleDateChange}
                                 // bookedDates={serviceDetails?.dates.booked}
@@ -670,112 +639,59 @@ const EditService = ({ loading, setLoading, error, setError, }) => {
                             />
                         </Grid>
 
-                        {/* booking summary */}
-                        <Grid item xs={12} sm={6} md={4} lg={4}>
-                            <Box component='img' src='https://placehold.co' sx={{ borderRadius: 4 }} />
+
+
+                        {/* Why Choose Us section */}
+                        <WhyChooseUs
+                            whyChooseUs={serviceDetails.additionalFields?.generatedWhyUs}
+                        />
+
+                        <Grid item xs={12} display='flex' justifyContent='end'>
+                            <Alert
+                                severity="warning"
+                                variant="outlined"
+                                sx={{
+                                    fontSize: "0.75rem",
+                                    fontStyle: "italic",
+                                    maxWidth: 400,
+                                    maxHeight: 'auto',
+                                    borderRadius: 2,
+                                    backgroundColor: "#fff8e1",
+                                }}
+                                action={
+                                    <Button
+                                        size="small"
+                                        endIcon={<Edit />}
+                                        variant="text"
+                                        color="info"
+                                        onClick={() => {
+                                            setOpenWhyUs(true);
+                                        }}
+                                        sx={{
+                                            borderRadius: 2,
+                                            width: "fit-content",
+                                            textTransform: "none",
+                                        }}
+                                    >
+                                        Edit Why Us
+                                    </Button>
+                                }
+                            >
+                                Note: You can edit description.
+                            </Alert>
                         </Grid>
 
-                        {/*  Why Choose This Venue */}
-                        <Box
-                            sx={{
-                                mb: 5,
-                                py: 6,
-                                px: { xs: 1, md: 3 },
-                                borderRadius: 2,
-                            }}
-                        >
-                            {/* Flex container for title & alert */}
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    flexWrap: "wrap", // so it stacks on small screens
-                                    gap: 2,
-                                    mb: 3,
-                                }}
-                            >
-                                {/* Title */}
-                                <Typography
-                                    variant="h6"
-                                    fontWeight={600}
-                                    sx={{
-                                        position: "relative",
-                                        display: "inline-block",
-                                        px: 2,
-                                        "&::after": {
-                                            content: '""',
-                                            display: "block",
-                                            width: "60%",
-                                            height: "3px",
-                                            borderRadius: "2px",
-                                            background: "linear-gradient(90deg, #6a5acd, #b19cd9)",
-                                            margin: "8px auto 0",
-                                        },
-                                    }}
-                                >
-                                    Why Choose{" "}
-                                    <Box component="span" sx={{ color: "primary.main" }}>
-                                        {serviceDetails.additionalFields.businessName}
-                                    </Box>{" "}
-                                    ?
-                                </Typography>
-
-                                {/* Alert */}
-                                <Alert
-                                    severity="warning"
-                                    variant="outlined"
-                                    sx={{
-                                        fontSize: "0.75rem",
-                                        fontStyle: "italic",
-                                        maxWidth: 400,
-                                        borderRadius: 2,
-                                        backgroundColor: "#fff8e1",
-                                    }}
-                                    action={
-                                        <Button
-                                            size="small"
-                                            endIcon={<Edit />}
-                                            variant="text"
-                                            color="info"
-                                            onClick={() => {
-                                                setOpenWhyUs(true);
-                                            }}
-                                            sx={{
-                                                borderRadius: 2,
-                                                width: "fit-content",
-                                                textTransform: "none",
-                                            }}
-                                        >
-                                            Edit Why Us
-                                        </Button>
-                                    }
-                                >
-                                    Note: You can edit description.
-                                </Alert>
-                            </Box>
-
-                            {/* Why Choose Us section */}
-                            <WhyChooseUs
-                                whyChooseUs={serviceDetails.additionalFields?.generatedWhyUs}
-                            />
-
-                            <EditWhyUsModal
-                                open={openWhyUs}
-                                handleClose={() => setOpenWhyUs(false)}
-                                initialValue={serviceDetails.additionalFields?.generatedWhyUs || []}
-                                customPricing={customPricing}
-                                CustomFields={customFields}
-                                onGenerate={handleGeneratedReasons}
-                            />
+                        <EditWhyUsModal
+                            open={openWhyUs}
+                            handleClose={() => setOpenWhyUs(false)}
+                            initialValue={serviceDetails.additionalFields?.generatedWhyUs || []}
+                            customPricing={customPricing}
+                            CustomFields={customFields}
+                            onGenerate={handleGeneratedReasons}
+                        />
+                    </Grid>
 
 
-                        </Box>
-
-
-
-
-                    </Grid >
                 </Box >
 
             }

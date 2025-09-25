@@ -9,7 +9,7 @@ import 'react-date-range/dist/theme/default.css';
 const DateStorer = ({ onDateChange, bookedDates, availableDates }) => {
 
     const disabledDates = bookedDates.map(date => new Date(date));
-    const avail_Dates = availableDates.map(date => new Date(date));
+    const avail_Dates = availableDates?.map(date => new Date(date)) || [];
 
     const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"))
 

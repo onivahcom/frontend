@@ -20,15 +20,21 @@ import {
     Button,
     Grid,
     IconButton,
+    Card
 } from "@mui/material";
 import { RemoveRedEye } from "@mui/icons-material";
 import Close from "@mui/icons-material/Close";
 import PaginationWrapper from "./Utils/PaginationWrapper";
 import adminAxios, { apiUrl } from "../Api/Api";
 import { Link } from "react-router-dom";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 
 const UsersList = () => {
+
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
@@ -86,58 +92,131 @@ const UsersList = () => {
 
             {/* Responsive Table */} {/* Table container */}
 
-            <TableContainer component={Paper} elevation={0} sx={{ overflowX: "auto" }}>
-                <Table size="medium">
-                    <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
-                        <TableRow>
-                            <TableCell>S.No</TableCell>
-                            <TableCell>Profile</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Phone</TableCell>
-                            <TableCell>City</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-
-                    {/* PaginationWrapper will only render TableBody rows */}
-                    <PaginationWrapper
-                        data={filteredUsers}
-                        defaultRowsPerPage={5}
-                        renderRow={(users, index) => (
-                            <TableRow
-                                key={users._id}
-                                hover
-                                sx={{ cursor: "pointer" }}
-                                onClick={() => setSelectedUsers(users)}
+            {isMobile ? (
+                // ✅ Mobile - Grid / Card View
+                <Grid container spacing={2}>
+                    {filteredUsers.map((user, index) => (
+                        <Grid item xs={12} key={user._id}>
+                            <Card
+                                sx={{
+                                    borderRadius: 2,
+                                    boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                                    p: 2,
+                                    cursor: "pointer",
+                                    "&:hover": { boxShadow: "0 6px 16px rgba(0,0,0,0.1)" },
+                                }}
+                                onClick={() => setSelectedUsers(user)}
                             >
-                                <TableCell>{index + 1}</TableCell>
-                                <TableCell>
+                                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                                     <Avatar
-                                        src={users.profilePic}
-                                        alt={`${users.firstName} ${users.lastName}`}
-                                        sx={{ width: 40, height: 40 }}
+                                        src={user.profilePic}
+                                        alt={`${user.firstname} ${user.lastname}`}
+                                        sx={{ width: 48, height: 48, mr: 2 }}
                                     />
-                                </TableCell>
-                                <TableCell>{users.firstName} {users.lastName}</TableCell>
-                                <TableCell>{users.email}</TableCell>
-                                <TableCell>{users.phone}</TableCell>
-                                <TableCell>{users.city}</TableCell>
-                                <TableCell>
+                                    <Box>
+                                        <Typography variant="subtitle1" fontWeight="600">
+                                            {user.firstname} {user.lastname}
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{
+                                                display: "-webkit-box",
+                                                WebkitLineClamp: 1,
+                                                WebkitBoxOrient: "vertical",
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
+                                            }}
+                                        >
+                                            {user.email}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+
+                                <Grid container spacing={1}>
+                                    <Grid item xs={6}>
+                                        <Typography variant="caption" color="text.secondary">
+                                            Phone
+                                        </Typography>
+                                        <Typography variant="body2">{user.phone}</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="caption" color="text.secondary">
+                                            City
+                                        </Typography>
+                                        <Typography variant="body2">{user.city}</Typography>
+                                    </Grid>
+                                </Grid>
+
+                                {/* Action */}
+                                <Box sx={{ textAlign: "right", mt: 1 }}>
                                     <IconButton
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            setSelectedUsers(users);
+                                            setSelectedUsers(user);
                                         }}
                                     >
                                         <RemoveRedEye sx={{ color: "grey" }} />
                                     </IconButton>
-                                </TableCell>
+                                </Box>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            ) : (
+                // ✅ Desktop - Keep Table
+                <TableContainer component={Paper} elevation={0} sx={{ overflowX: "auto" }}>
+                    <Table size="medium">
+                        <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
+                            <TableRow>
+                                <TableCell>S.No</TableCell>
+                                <TableCell>Profile</TableCell>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Email</TableCell>
+                                <TableCell>Phone</TableCell>
+                                <TableCell>City</TableCell>
+                                <TableCell>Actions</TableCell>
                             </TableRow>
-                        )}
-                    />
-                </Table>
-            </TableContainer>
+                        </TableHead>
+
+                        <PaginationWrapper
+                            data={filteredUsers}
+                            defaultRowsPerPage={5}
+                            renderRow={(user, index) => (
+                                <TableRow
+                                    key={user._id}
+                                    hover
+                                    sx={{ cursor: "pointer" }}
+                                    onClick={() => setSelectedUsers(user)}
+                                >
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>
+                                        <Avatar
+                                            src={user.profilePic}
+                                            alt={`${user.firstname} ${user.lastname}`}
+                                            sx={{ width: 40, height: 40 }}
+                                        />
+                                    </TableCell>
+                                    <TableCell>{user.firstname} {user.lastname}</TableCell>
+                                    <TableCell>{user.email}</TableCell>
+                                    <TableCell>{user.phone}</TableCell>
+                                    <TableCell>{user.city}</TableCell>
+                                    <TableCell>
+                                        <IconButton
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setSelectedUsers(user);
+                                            }}
+                                        >
+                                            <RemoveRedEye sx={{ color: "grey" }} />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        />
+                    </Table>
+                </TableContainer>
+            )}
 
 
             {/* Dialog for users Details */}
@@ -147,6 +226,7 @@ const UsersList = () => {
                     onClose={() => setSelectedUsers(null)}
                     maxWidth="sm"
                     fullWidth
+                    fullScreen
                 >
                     <DialogTitle
                         sx={{

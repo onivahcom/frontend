@@ -237,6 +237,10 @@ button {
   background-color: rgb(219, 241, 255) !important;
 }
 
+.rdrCalendarWrapper {
+  max-width: 100% !important;
+}
+
 /* Responsive Styling */
 @media (max-width: 768px) {
   .dropdown-content {

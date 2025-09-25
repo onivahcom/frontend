@@ -79,19 +79,19 @@ const ManageServices = ({ setLoading, setError, loading, error }) => {
 
 
     return (
-        <Box p={4} maxWidth="md" mx="auto">
+        <Box p={2} maxWidth="md" mx="auto">
             <Typography variant="body5" color="inherit" fontWeight={500} component='div' mb={5}>
                 Manage Your Services
             </Typography>
 
-            <Box display="flex" gap={2} mb={3} flexDirection={{ xs: "column", sm: "row" }}>
+            <Box display="flex" gap={2} mb={3} flexDirection={{ xs: "row", sm: "row" }} justifyContent='end'>
                 <TextField
                     size="small"
                     variant="outlined"
                     placeholder="🔍 Search by business name..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    sx={{ flex: 1 }}
+                    sx={{ width: 600 }}
                 />
                 <TextField
                     select

@@ -36,7 +36,7 @@ import { apiUrl, backendApi } from "../Api/Api";
 import OrderNotification from "../vendorUtils/OrderNotification";
 import PendingNotifications from "../vendorUtils/PendingNotifications";
 
-const drawerWidth = 350; // Sidebar width
+const drawerWidth = '100%'; // Sidebar width
 
 
 
@@ -407,7 +407,7 @@ const VendorLayout = ({ vendor }) => {
                     display: "flex",
                     flexDirection: "column",
                     mb: isMessageRelated ? 0 : 1,
-                    px: isMessageRelated ? 0 : 1
+                    px: isMessageRelated ? 0 : 0
 
                 }}
             >

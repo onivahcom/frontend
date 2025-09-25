@@ -18,14 +18,20 @@ import {
     DialogContent,
     Grid,
     IconButton,
+    Card
 } from "@mui/material";
 import { RemoveRedEye } from "@mui/icons-material";
 import Close from "@mui/icons-material/Close";
 import PaginationWrapper from "./Utils/PaginationWrapper";
 import adminAxios, { apiUrl } from "../Api/Api";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 
 const VendorsList = () => {
+
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
     const [vendors, setVendors] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
@@ -83,44 +89,64 @@ const VendorsList = () => {
 
             {/* Responsive Table */} {/* Table container */}
 
-            <TableContainer component={Paper} elevation={0} sx={{ overflowX: "auto" }}>
-                <Table size="medium">
-                    <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
-                        <TableRow>
-                            <TableCell>S.No</TableCell>
-                            <TableCell>Profile</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Phone</TableCell>
-                            <TableCell>City</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-
-                    {/* PaginationWrapper will only render TableBody rows */}
-                    <PaginationWrapper
-                        data={filteredVendors}
-                        defaultRowsPerPage={5}
-                        renderRow={(vendor, index) => (
-                            <TableRow
-                                key={vendor._id}
-                                hover
-                                sx={{ cursor: "pointer" }}
+            {isMobile ? (
+                // ✅ Mobile - Card Layout
+                <Grid container spacing={2}>
+                    {filteredVendors.map((vendor, index) => (
+                        <Grid item xs={12} key={vendor._id}>
+                            <Card
+                                sx={{
+                                    borderRadius: 2,
+                                    boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                                    p: 2,
+                                    cursor: "pointer",
+                                    "&:hover": { boxShadow: "0 6px 16px rgba(0,0,0,0.1)" },
+                                }}
                                 onClick={() => setSelectedVendor(vendor)}
                             >
-                                <TableCell>{index + 1}</TableCell>
-                                <TableCell>
+                                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                                     <Avatar
                                         src={vendor.profilePic}
                                         alt={`${vendor.firstName} ${vendor.lastName}`}
-                                        sx={{ width: 40, height: 40 }}
+                                        sx={{ width: 48, height: 48, mr: 2 }}
                                     />
-                                </TableCell>
-                                <TableCell>{vendor.firstName} {vendor.lastName}</TableCell>
-                                <TableCell>{vendor.email}</TableCell>
-                                <TableCell>{vendor.phone}</TableCell>
-                                <TableCell>{vendor.city}</TableCell>
-                                <TableCell>
+                                    <Box>
+                                        <Typography variant="subtitle1" fontWeight="600">
+                                            {vendor.firstName} {vendor.lastName}
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{
+                                                display: "-webkit-box",
+                                                WebkitLineClamp: 1,
+                                                WebkitBoxOrient: "vertical",
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
+                                            }}
+                                        >
+                                            {vendor.email}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+
+                                <Grid container spacing={1}>
+                                    <Grid item xs={6}>
+                                        <Typography variant="caption" color="text.secondary">
+                                            Phone
+                                        </Typography>
+                                        <Typography variant="body2">{vendor.phone}</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="caption" color="text.secondary">
+                                            City
+                                        </Typography>
+                                        <Typography variant="body2">{vendor.city}</Typography>
+                                    </Grid>
+                                </Grid>
+
+                                {/* Action */}
+                                <Box sx={{ textAlign: "right", mt: 1 }}>
                                     <IconButton
                                         onClick={(e) => {
                                             e.stopPropagation();
@@ -129,16 +155,67 @@ const VendorsList = () => {
                                     >
                                         <RemoveRedEye sx={{ color: "grey" }} />
                                     </IconButton>
-                                </TableCell>
+                                </Box>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            ) : (
+                // ✅ Desktop - Keep Table
+                <TableContainer component={Paper} elevation={0} sx={{ overflowX: "auto" }}>
+                    <Table size="medium">
+                        <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
+                            <TableRow>
+                                <TableCell>S.No</TableCell>
+                                <TableCell>Profile</TableCell>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Email</TableCell>
+                                <TableCell>Phone</TableCell>
+                                <TableCell>City</TableCell>
+                                <TableCell>Actions</TableCell>
                             </TableRow>
-                        )}
-                    />
-                </Table>
-            </TableContainer>
+                        </TableHead>
 
-
-
-
+                        <PaginationWrapper
+                            data={filteredVendors}
+                            defaultRowsPerPage={5}
+                            renderRow={(vendor, index) => (
+                                <TableRow
+                                    key={vendor._id}
+                                    hover
+                                    sx={{ cursor: "pointer" }}
+                                    onClick={() => setSelectedVendor(vendor)}
+                                >
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>
+                                        <Avatar
+                                            src={vendor.profilePic}
+                                            alt={`${vendor.firstName} ${vendor.lastName}`}
+                                            sx={{ width: 40, height: 40 }}
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        {vendor.firstName} {vendor.lastName}
+                                    </TableCell>
+                                    <TableCell>{vendor.email}</TableCell>
+                                    <TableCell>{vendor.phone}</TableCell>
+                                    <TableCell>{vendor.city}</TableCell>
+                                    <TableCell>
+                                        <IconButton
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setSelectedVendor(vendor);
+                                            }}
+                                        >
+                                            <RemoveRedEye sx={{ color: "grey" }} />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        />
+                    </Table>
+                </TableContainer>
+            )}
 
             {/* Dialog for Vendor Details */}
             {selectedVendor && (
@@ -147,6 +224,7 @@ const VendorsList = () => {
                     onClose={() => setSelectedVendor(null)}
                     maxWidth="sm"
                     fullWidth
+                    fullScreen
                 >
                     <DialogTitle
                         sx={{

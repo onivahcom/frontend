@@ -228,160 +228,180 @@ const RequestedServices = () => {
                 Requested Services
             </Typography>
 
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: { xs: "column", sm: "row" },
-                    gap: 2,
-                    mb: 2,
-                    py: 3,
-                    maxWidth: '100%',
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    bgcolor: "#f8f8f8"
-                }}
-            >
-                {/* Search Input */}
-                <TextField
-                    size="small"
-                    label="Search by name/email"
-                    value={searchText}
-                    sx={{ width: '50%' }}
-                    onChange={(e) => setSearchText(e.target.value)}
-                />
+            <Box sx={{ bgcolor: "#f8f8f8", p: 2, borderRadius: 2, mb: 2 }}>
+                <Grid container spacing={2} alignItems="center">
+                    {/* Search Input */}
+                    <Grid item xs={12} sm={6} md={4}>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            label="Search by name/email"
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
+                    </Grid>
 
-                {/* Category Dropdown */}
-                <FormControl size="small" sx={{ minWidth: 150 }}>
-                    <InputLabel>Category</InputLabel>
-                    <Select
-                        value={filterCategory}
-                        label="Category"
-                        onChange={(e) => setFilterCategory(e.target.value)}
-                    >
-                        <MenuItem value="">All</MenuItem>
-                        {Array.from(new Set(requestedServices.map(s => s.category))).map((cat) => (
-                            <MenuItem key={cat} value={cat}>
-                                {cat.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                    {/* Category Dropdown */}
+                    <Grid item xs={6} sm={3} md={2}>
+                        <FormControl fullWidth size="small">
+                            <InputLabel>Category</InputLabel>
+                            <Select
+                                value={filterCategory}
+                                label="Category"
+                                onChange={(e) => setFilterCategory(e.target.value)}
+                            >
+                                <MenuItem value="">All</MenuItem>
+                                {Array.from(new Set(requestedServices.map(s => s.category))).map((cat) => (
+                                    <MenuItem key={cat} value={cat}>
+                                        {cat.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
 
-                {/* Sort Dropdown */}
-                <FormControl size="small" sx={{ minWidth: 150 }}>
-                    <InputLabel>Sort By</InputLabel>
-                    <Select
-                        value={sortBy}
-                        label="Sort By"
-                        onChange={(e) => setSortBy(e.target.value)}
-                    >
-                        <MenuItem value="">None</MenuItem>
-                        <MenuItem value="date">Date</MenuItem>
-                        <MenuItem value="category">Category</MenuItem>
-                    </Select>
-                </FormControl>
+                    {/* Sort Dropdown */}
+                    <Grid item xs={6} sm={3} md={2}>
+                        <FormControl fullWidth size="small">
+                            <InputLabel>Sort By</InputLabel>
+                            <Select
+                                value={sortBy}
+                                label="Sort By"
+                                onChange={(e) => setSortBy(e.target.value)}
+                            >
+                                <MenuItem value="">None</MenuItem>
+                                <MenuItem value="date">Date</MenuItem>
+                                <MenuItem value="category">Category</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
 
-                <Button size='small' sx={{ minWidth: 150 }} variant='text' onClick={() => {
-                    setSortBy(null);
-                    setFilterCategory(null);
-                    setSearchText('');
-                }}>
-                    Clear Filters
-                </Button>
-
+                    {/* Clear Filters Button */}
+                    <Grid item xs={12} sm={12} md={2}>
+                        <Button
+                            fullWidth
+                            size="small"
+                            variant="text"
+                            onClick={() => {
+                                setSortBy(null);
+                                setFilterCategory(null);
+                                setSearchText('');
+                            }}
+                        >
+                            Clear Filters
+                        </Button>
+                    </Grid>
+                </Grid>
             </Box>
 
 
-            <Box sx={{ width: "100%", overflowX: "auto" }}>
-                <TableContainer
-                    component={Paper}
-                    sx={{
-                        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-                        borderRadius: "12px",
-                        maxWidth: 900,
-                        margin: "auto",
-                        overflowX: "auto", // makes it scrollable on small screens
-                    }}
-                >
-                    <Table sx={{ minWidth: 650 }}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell sx={{ fontWeight: "bold" }}>#</TableCell>
-                                <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
-                                <TableCell sx={{ fontWeight: "bold", display: { xs: "none", sm: "table-cell" } }}>Email</TableCell>
-                                <TableCell sx={{ fontWeight: "bold" }}>Service</TableCell>
-                                <TableCell sx={{ fontWeight: "bold", textAlign: "center" }}>Action</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {filteredServices.map((service, index) => (
-                                <TableRow
-                                    onClick={() => handleViewDetails(service)}
-                                    key={index}
-                                    sx={{
-                                        "&:nth-of-type(odd)": { backgroundColor: "#fafafa" },
-                                        "&:hover": { backgroundColor: "#f8f8f8", cursor: "pointer" },
-                                        transition: "all 0.3s ease",
-                                    }}
-                                >
-                                    {/* Index */}
-                                    <TableCell sx={{ fontWeight: "bold", color: "#333", width: "5%" }}>
-                                        {index + 1}
-                                    </TableCell>
+            <Grid container spacing={2}>
+                {filteredServices.map((service, index) => (
+                    <Grid item xs={6} lg={3} key={index}>
+                        <Box
+                            sx={{
+                                p: 2,
+                                borderRadius: 2,
+                                boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                                bgcolor: "white",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                height: "100%",
+                                cursor: "pointer",
+                                transition: "all 0.3s ease",
+                                position: "relative", // needed for absolute chip
+                                "&:hover": {
+                                    transform: "translateY(-4px)",
+                                    boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+                                },
+                            }}
+                            onClick={() => handleViewDetails(service)}
+                        >
+                            {/* Cover Image */}
+                            <Box
+                                component="img"
+                                src={service?.images?.CoverImage?.[0] || "/placeholder.jpg"}
+                                alt={service.fullName}
+                                sx={{
+                                    width: "100%",
+                                    height: 150,
+                                    borderRadius: 2,
+                                    objectFit: "cover",
+                                    mb: 1.5,
+                                }}
+                            />
 
-                                    {/* Name */}
-                                    <TableCell sx={{ width: { xs: "fit-content", sm: "20%" }, fontSize: "0.95rem", color: "#444" }}>
-                                        {service.fullName}
-                                    </TableCell>
+                            {/* Category Chip - absolute */}
+                            <Chip
+                                label={formatCategory(service.category)}
+                                color="default"
+                                sx={{
+                                    fontSize: "0.75rem",
+                                    fontWeight: 500,
+                                    bgcolor: "white",
+                                    border: "1px solid #ddd",
+                                    position: "absolute",
+                                    top: 8,
+                                    right: 8,
+                                    boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+                                }}
+                            />
 
-                                    {/* Email */}
-                                    <TableCell sx={{ width: "25%", display: { xs: "none", sm: "table-cell" }, fontSize: "0.9rem", color: "#666" }}>
-                                        {service.additionalFields.businessName}
-                                    </TableCell>
+                            {/* Name */}
+                            <Typography
+                                variant="subtitle1"
+                                fontWeight={600}
+                                sx={{
+                                    color: "#1e1e1e",
+                                    mb: 0.5,
+                                    textAlign: "center",
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 1,
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                }}
+                            >
+                                {service.fullName}
+                            </Typography>
 
-                                    {/* Category */}
-                                    <TableCell sx={{ width: { xs: "30%", sm: "25%" } }}>
-                                        <Chip
-                                            label={formatCategory(service.category)}
-                                            color="primary"
-                                            variant="outlined"
-                                            sx={{
-                                                fontWeight: "bold",
-                                                fontSize: "0.85rem",
-                                                padding: "5px 12px",
-                                                borderRadius: "8px",
-                                                border: "none",
-                                            }}
-                                        />
-                                    </TableCell>
+                            {/* Business Name */}
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    color: "#666",
+                                    mb: 1,
+                                    textAlign: "center",
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                }}
+                            >
+                                {service.additionalFields.businessName}
+                            </Typography>
 
-
-                                    {/* Action */}
-                                    <TableCell sx={{ width: { xs: "fit-content", sm: "20%" }, textAlign: "center" }}>
-                                        <Button
-                                            endIcon={<NavigateNext />}
-                                            size="small"
-                                            variant="contained"
-                                            sx={{
-                                                textTransform: "none",
-                                                color: "white",
-                                                bgcolor: "#1976d2",
-                                                minWidth: isMobile ? "100%" : "fit-content",
-                                                borderRadius: "8px",
-                                                "&:hover": { bgcolor: "#115293" },
-                                            }}
-                                            onClick={() => handleViewDetails(service)}
-                                        >
-                                            View
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-
-            </Box>
+                            {/* Action */}
+                            <Button
+                                endIcon={<NavigateNext />}
+                                size="small"
+                                variant="text"
+                                sx={{
+                                    textTransform: "none",
+                                    borderRadius: "8px",
+                                    width: "100%",
+                                    color: "#1976d2",
+                                    fontWeight: 500,
+                                }}
+                            >
+                                View
+                            </Button>
+                        </Box>
+                    </Grid>
+                ))}
+            </Grid>
 
             {/* Slide Drawer for Details */}
             <Drawer anchor="bottom" open={drawerOpen} onClose={handleCloseDrawer} sx={{ p: 2 }}>
@@ -655,7 +675,7 @@ const RequestedServices = () => {
                                     sx={{ width: "100%", p: 3 }}
                                     direction={isMobile ? "row" : "row"}
                                     spacing={2}
-                                    justifyContent={isMobile ? "stretch" : "center"}
+                                    justifyContent={isMobile ? "center" : "center"}
                                     alignItems="center"
                                 >
                                     <Button

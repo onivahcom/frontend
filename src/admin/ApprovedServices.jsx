@@ -85,67 +85,71 @@ const ApprovedServices = () => {
 
             </Box>
 
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: { xs: "column", sm: "row" },
-                    gap: 2,
-                    mb: 2,
-                    py: 3,
-                    maxWidth: '100%',
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    bgcolor: "#f8f8f8"
-                }}
-            >
-                {/* Search Input */}
-                <TextField
-                    size="small"
-                    label="Search by name/email"
-                    value={searchText}
-                    sx={{ width: '50%' }}
-                    onChange={(e) => setSearchText(e.target.value)}
-                />
 
-                {/* Category Dropdown */}
-                <FormControl size="small" sx={{ minWidth: 150 }}>
-                    <InputLabel>Category</InputLabel>
-                    <Select
-                        value={filterCategory}
-                        label="Category"
-                        onChange={(e) => setFilterCategory(e.target.value)}
-                    >
-                        <MenuItem value="">All</MenuItem>
-                        {Array.from(new Set(services.map(s => s.category))).map((cat) => (
-                            <MenuItem key={cat} value={cat}>
-                                {cat.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+            <Box sx={{ bgcolor: "#f8f8f8", p: 2, borderRadius: 2 }}>
+                <Grid container spacing={2} alignItems="center">
+                    {/* Search Input */}
+                    <Grid item xs={12} sm={6} md={4}>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            label="Search by name/email"
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
+                    </Grid>
 
-                {/* Sort Dropdown */}
-                <FormControl size="small" sx={{ minWidth: 150 }}>
-                    <InputLabel>Sort By</InputLabel>
-                    <Select
-                        value={sortBy}
-                        label="Sort By"
-                        onChange={(e) => setSortBy(e.target.value)}
-                    >
-                        <MenuItem value="">None</MenuItem>
-                        <MenuItem value="date">Date</MenuItem>
-                        <MenuItem value="category">Category</MenuItem>
-                    </Select>
-                </FormControl>
+                    {/* Category Dropdown */}
+                    <Grid item xs={6} sm={3} md={2}>
+                        <FormControl fullWidth size="small">
+                            <InputLabel>Category</InputLabel>
+                            <Select
+                                value={filterCategory}
+                                label="Category"
+                                onChange={(e) => setFilterCategory(e.target.value)}
+                            >
+                                <MenuItem value="">All</MenuItem>
+                                {Array.from(new Set(services.map(s => s.category))).map((cat) => (
+                                    <MenuItem key={cat} value={cat}>
+                                        {cat.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
 
-                <Button size='small' sx={{ minWidth: 150 }} variant='text' onClick={() => {
-                    setSortBy(null);
-                    setFilterCategory(null);
-                    setSearchText('');
-                }}>
-                    Clear Filters
-                </Button>
+                    {/* Sort Dropdown */}
+                    <Grid item xs={6} sm={3} md={2}>
+                        <FormControl fullWidth size="small">
+                            <InputLabel>Sort By</InputLabel>
+                            <Select
+                                value={sortBy}
+                                label="Sort By"
+                                onChange={(e) => setSortBy(e.target.value)}
+                            >
+                                <MenuItem value="">None</MenuItem>
+                                <MenuItem value="date">Date</MenuItem>
+                                <MenuItem value="category">Category</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
 
+                    {/* Clear Button */}
+                    <Grid item xs={12} sm={12} md={2}>
+                        <Button
+                            fullWidth
+                            size="small"
+                            variant="text"
+                            onClick={() => {
+                                setSortBy(null);
+                                setFilterCategory(null);
+                                setSearchText('');
+                            }}
+                        >
+                            Clear Filters
+                        </Button>
+                    </Grid>
+                </Grid>
             </Box>
 
             {/* Services List */}

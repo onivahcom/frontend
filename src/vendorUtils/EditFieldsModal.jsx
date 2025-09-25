@@ -21,6 +21,7 @@ import {
 import { Delete, Add } from "@mui/icons-material";
 import theme from "../Themes/theme";
 import { useMediaQuery } from "@mui/material";
+import Close from "@mui/icons-material/Close";
 
 const EditFieldsModal = ({ open, handleClose, initialValue = [], onSave }) => {
 
@@ -53,18 +54,28 @@ const EditFieldsModal = ({ open, handleClose, initialValue = [], onSave }) => {
     const handleSave = () => onSave(fields);
 
     return (
-        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg" PaperProps={{ sx: { borderRadius: 3, p: 2 } }}>
-            <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                Edit Fields
-                <Button variant="outlined" onClick={handleAddCustomField}>
-                    Add Field
-                </Button>
+        <Dialog open={open} fullScreen onClose={handleClose} fullWidth maxWidth="lg" PaperProps={{ sx: { borderRadius: 3, p: 2 } }}>
+            <DialogTitle sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                {/* First row: Title + Close Icon */}
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography variant="h6">Edit Fields</Typography>
+                    <IconButton onClick={handleClose}>
+                        <Close />
+                    </IconButton>
+                </Box>
+
+                {/* Second row: Add Field button */}
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button variant="outlined" onClick={handleAddCustomField}>
+                        Add Field
+                    </Button>
+                </Box>
             </DialogTitle>
+
             <DialogContent>
 
-
                 {fields.map((field, index) => (
-                    <Paper elevation={0} key={index} sx={{ p: 2, mb: 2, borderRadius: 2 }}>
+                    <Paper elevation={0} key={index} sx={{ mt: 2, p: 0, mb: 2, borderRadius: 2 }}>
                         <Grid container spacing={2} alignItems="center">
                             <Grid item xs={12} sm={3}>
                                 <TextField

@@ -159,7 +159,7 @@ const SearchBox = ({ setLoading, setError }) => {
                     borderRadius: { xs: 4, md: '62px' },
                     // border: "1px solid #ddd",
                     boxShadow: 0,
-                    bgcolor: { xs: "#f4edff", md: "#f4edff" },
+                    bgcolor: { xs: "#f8f4fd", md: "#f4edff" },
                 }}
             >
 

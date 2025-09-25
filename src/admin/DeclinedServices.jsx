@@ -57,7 +57,7 @@ const DeclinedServices = () => {
     }
 
     return (
-        <Box sx={{ padding: 3 }}>
+        <Box sx={{ padding: 2 }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
                 <Typography variant="body2" fontWeight={500} gutterBottom>
                     Declined Services
@@ -75,69 +75,109 @@ const DeclinedServices = () => {
 
             <Grid container spacing={3}>
                 {filteredServices.length === 0 ? (
-                    <Typography>No declined services available.</Typography>
+                    <Grid item xs={12}>
+                        <Typography
+                            align="center"
+                            sx={{ color: "text.secondary", mt: 4 }}
+                        >
+                            No declined services available.
+                        </Typography>
+                    </Grid>
                 ) : (
                     filteredServices.map((service) => (
-                        <Grid item key={service._id} xs={6} sm={6} md={3}>
+                        <Grid item key={service._id} xs={6} sm={6} md={4} lg={3}>
                             <Card
                                 sx={{
-                                    minHeight: 250,
+                                    height: "100%",
                                     cursor: "pointer",
                                     borderRadius: 3,
                                     boxShadow: 0,
-                                    position: "relative"
+                                    position: "relative",
+                                    bgcolor: "#f8f8f8",
+                                    transition: "all 0.3s ease",
+                                    "&:hover": {
+                                        transform: "translateY(-4px)",
+                                        boxShadow: "0 6px 16px rgba(0,0,0,0.1)",
+                                    },
                                 }}
-                                onClick={() => handleOpenDialog(service)}>
-                                <CardContent sx={{ textAlign: "center" }}>
-                                    {/* Service Image */}
-                                    {service.images.CoverImage && (
-                                        <Box
-                                            sx={{
-                                                mt: 1,
-                                                borderRadius: 2,
-                                                overflow: "hidden",
-                                                display: "flex",
-                                                justifyContent: "center",
+                                onClick={() => handleOpenDialog(service)}
+                            >
+                                {/* Service Image */}
+                                {service.images?.CoverImage?.[0] && (
+                                    <Box
+                                        sx={{
+                                            height: 160,
+                                            borderTopLeftRadius: 12,
+                                            borderTopRightRadius: 12,
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        <img
+                                            src={service.images.CoverImage[0]}
+                                            alt={service.additionalFields.businessName}
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover",
                                             }}
-                                        >
-                                            <img
-                                                src={service.images?.CoverImage?.[0]}
-                                                alt={service.additionalFields.businessName}
-                                                style={{
-                                                    width: "100%",
-                                                    height: "180px",
-                                                    objectFit: "cover",
-                                                    borderRadius: "8px",
-                                                }}
-                                            />
-                                        </Box>
-                                    )}
-                                    <Chip color="error" variant="filled" label={formatCategory(service.category)} sx={{ mt: 1, color: "white", position: "absolute", top: 0, right: 0 }} />
-                                    {/* Full Name */}
-                                    <Typography variant="body1" sx={{ fontWeight: "medium", mt: 1 }}>
+                                        />
+                                    </Box>
+                                )}
+
+                                {/* Category Chip */}
+                                <Chip
+                                    color="error"
+                                    label={formatCategory(service.category)}
+                                    size="small"
+                                    sx={{
+                                        position: "absolute",
+                                        top: 12,
+                                        right: 12,
+                                        fontSize: "0.75rem",
+                                        fontWeight: "bold",
+                                        color: "#fff",
+                                    }}
+                                />
+
+                                <CardContent sx={{ textAlign: "center", p: 2 }}>
+                                    {/* Business Name */}
+                                    <Typography
+                                        variant="subtitle1"
+                                        sx={{
+                                            fontWeight: 600,
+                                            mb: 0.5,
+                                            display: "-webkit-box",
+                                            WebkitLineClamp: 1,
+                                            WebkitBoxOrient: "vertical",
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                        }}
+                                    >
                                         {service.additionalFields.businessName}
                                     </Typography>
-                                    <Typography variant="caption" sx={{ fontWeight: "bold", color: "error.main" }}>
+
+                                    {/* Decline Reason */}
+                                    <Typography
+                                        variant="caption"
+                                        sx={{ fontWeight: 600, color: "error.main" }}
+                                    >
                                         Declined due to:
                                     </Typography>
                                     <Typography
                                         variant="body2"
-                                        color="textSecondary"
+                                        color="text.secondary"
                                         sx={{
                                             mt: 0.5,
                                             fontStyle: "italic",
+                                            display: "-webkit-box",
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: "vertical",
                                             overflow: "hidden",
                                             textOverflow: "ellipsis",
-                                            whiteSpace: "nowrap",
-                                            display: "block",
-                                            maxWidth: "100%", // Ensure it applies correctly
                                         }}
                                     >
                                         {service.declineReason}
                                     </Typography>
-
-
-
                                 </CardContent>
                             </Card>
                         </Grid>
@@ -145,7 +185,8 @@ const DeclinedServices = () => {
                 )}
             </Grid>
 
-            <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="md">
+
+            <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="lg">
                 {selectedService && (
                     <>
                         <DialogTitle

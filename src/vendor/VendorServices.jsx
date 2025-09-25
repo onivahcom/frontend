@@ -186,7 +186,7 @@ const VendorServices = () => {
                             mt: 1,
                             // maxHeight: { xs: "50vh", md: "70vh" },
                             overflowY: 'auto',
-                            padding: 1,
+                            padding: 0,
                         }}
                     >
 
@@ -220,7 +220,7 @@ const VendorServices = () => {
 
 
 
-                        <Grid container sx={{ p: 1 }}>
+                        <Grid container sx={{ p: 0 }}>
 
                             {venueCategory
                                 .filter((category) =>

@@ -1,182 +1,32 @@
-import React, { useEffect } from "react";
-import {
-    Box,
-    Typography,
-    Button,
-    useMediaQuery,
-    useTheme,
-} from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import React, { useEffect, useState } from "react";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/react-splide/css';
-import { Parallax } from "react-parallax";
-import { purple } from "@mui/material/colors";
-import { Card, CardMedia, } from "@mui/material";
-
 
 const HeroVideo = () => {
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("xl"));
+    const isXs = useMediaQuery(theme.breakpoints.down("sm")); // xs/sm screens
+    const tagline = "Find. Book. Celebrate.";
+    const [words, setWords] = useState([]);
 
     useEffect(() => {
+        setWords(tagline.split(" ")); // Split by words
         AOS.init({ duration: 1000, once: true });
     }, []);
 
     return (
-        <Box maxWidth="xl" mx="auto" sx={{
-            borderRadius: 10,
-            mt: 10,
-            position: "relative",
-            height: { xs: "80vh", sm: '70vh', md: "90vh", lg: "95vh", xl: "80vh" },
-            width: "100%", overflow: "hidden"
-        }}>
-            {/* <Splide
-                options={{
-                    type: 'fade',
-                    rewind: true,
-                    autoplay: false,
-                    interval: 6000,
-                    pauseOnHover: true,
-                    arrows: false,
-                    pagination: false,
-                    cover: true,
-                    height: '100vh',
-                }}
-                style={{ width: '100%', height: '100%', }}
-            >
-                {
-                    [
-                        // 'https://img.freepik.com/free-photo/portrait-people-wearing-graphic-eye-makeup_23-2151120778.jpg',
-                        'https://res.cloudinary.com/duhk3ldw7/image/upload/v1754388902/SHF00337_livmq6.jpg',
-                        // require("../images/hero/SHF00337.jpg"),
-                        require("../images/hero/SHF00343.jpg"),
-                        // "https://cdn.pixabay.com/photo/2016/11/18/22/21/bride-1837148_1280.jpg",
-                    ]
-                        .map(
-                            (src, idx) => (
-                                <SplideSlide key={idx}>
-                                    <Parallax
-                                        bgImage={src}
-                                        strength={300}
-                                        bgImageStyle={{
-
-                                            objectFit: "cover",
-                                            height: "100%",
-                                            width: "100%",
-                                            top: "0%",
-                                            position: "absolute"
-                                        }}
-                                    >
-                                        <Box
-                                            sx={{
-                                                height: "100vh",
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                textAlign: "center",
-                                                // background: "linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5))",
-                                                background: "rgba(0, 0, 0, 0.3)", // overlay
-                                                px: 2,
-                                                color: "#fff",
-                                            }}
-                                        >
-                                            <Box zIndex={2}>
-                                                <Typography
-                                                    variant="h3"
-                                                    fontWeight="bold"
-                                                    gutterBottom
-                                                    data-aos="fade-up"
-                                                >
-                                                    Capturing{" "}
-                                                    <Typography variant="h3" fontWeight="bold" component="span" sx={{ color: "#e4c6ff" }}>
-                                                        Love & Light
-                                                    </Typography>
-                                                </Typography>
-                                                <Typography
-                                                    variant="body5"
-                                                    sx={{ maxWidth: "700px" }}
-                                                    data-aos="fade-up"
-                                                    data-aos-delay="300"
-                                                >
-                                                    Turning beautiful moments into timeless memories.
-                                                </Typography>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    sx={{ display: { xs: "none", md: "none" }, mt: 4, mx: "auto" }}
-                                                    endIcon={<ArrowForwardIcon />}
-                                                >
-                                                    Book Now
-                                                </Button>
-                                            </Box>
-                                        </Box>
-                                    </Parallax>
-                                </SplideSlide>
-
-                            )
-                        )}
-            </Splide> */}
-            {/* <Parallax
-                bgImage='https://res.cloudinary.com/duhk3ldw7/image/upload/v1754388902/SHF00337_livmq6.jpg'
-                strength={300}
-                bgImageStyle={{
-
-                    objectFit: "cover",
-                    height: "100%",
-                    width: "100%",
-                    top: "0%",
-                    position: "absolute"
-                }}
-            >
-                <Box
-                    sx={{
-                        height: "100vh",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        textAlign: "center",
-                        borderRadius: 8,
-                        // background: "linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5))",
-                        background: "rgba(0, 0, 0, 0.3)", // e4c6ff overlay
-                        px: 2,
-                        color: "#fff",
-                    }}
-                >
-                    <Box zIndex={2}>
-                        <Typography
-                            variant="h3"
-                            fontWeight="bold"
-                            gutterBottom
-                            data-aos="fade-up"
-                        >
-                            Capturing{" "}
-                            <Typography variant="h3" fontWeight="bold" component="span" sx={{ color: purple[100] }}>
-                                Love & Light
-                            </Typography>
-                        </Typography>
-                        <Typography
-                            variant="body5"
-                            sx={{ maxWidth: "700px" }}
-                            data-aos="fade-up"
-                            data-aos-delay="300"
-                        >
-                            Turning beautiful moments into timeless memories.
-                        </Typography>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            sx={{ display: { xs: "none", md: "none" }, mt: 4, mx: "auto" }}
-                            endIcon={<ArrowForwardIcon />}
-                        >
-                            Book Now
-                        </Button>
-                    </Box>
-                </Box>
-            </Parallax> */}
-
-
+        <Box
+            maxWidth="xl"
+            mx="auto"
+            sx={{
+                borderRadius: 10,
+                mt: 10,
+                position: "relative",
+                height: { xs: "80vh", sm: "70vh", md: "90vh", lg: "95vh", xl: "80vh" },
+                width: "100%",
+                overflow: "hidden",
+            }}
+        >
             {/* Background Video */}
             <video
                 autoPlay
@@ -194,12 +44,91 @@ const HeroVideo = () => {
                     zIndex: -1,
                 }}
             >
-                <source src="https://www.pexels.com/download/video/31139772/" type="video/mp4" />
-                Your browser does not support the video tag.
+                {isXs ?
+                    <source
+                        src="https://videos.openai.com/vg-assets/assets%2Ftask_01jvgc2dwdeswrnm28fhsz73zc%2Ftask_01jvgc2dwdeswrnm28fhsz73zc_genid_dd0ac9e6-a8f8-43e4-8a96-f4e5fec28a71_25_05_18_00_18_764399%2Fvideos%2F00000_808889886%2Fmd.mp4?st=2025-09-25T09%3A42%3A29Z&se=2025-10-01T10%3A42%3A29Z&sks=b&skt=2025-09-25T09%3A42%3A29Z&ske=2025-10-01T10%3A42%3A29Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=1af02b11-169c-463d-b441-d2ccfc9f02c8&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=WiHMQiJtZV%2Bllku9BHg2D4x5KUoiGMOSB1L0tXadcok%3D&az=oaivgprodscus"
+                        type="video/mp4"
+                    />
+                    // <source
+                    //     src="https://videos.openai.com/vg-assets/assets%2Ftask_01jpmyeymfejyaa1efcebf6aef%2Ftask_01jpmyeymfejyaa1efcebf6aef_genid_037bac7f-f4b7-4c8b-8fa7-c0b80bac71ba_25_03_18_15_39_685303%2Fvideos%2F00000_7490631%2Fmd.mp4?st=2025-09-25T10%3A36%3A05Z&se=2025-10-01T11%3A36%3A05Z&sks=b&skt=2025-09-25T10%3A36%3A05Z&ske=2025-10-01T11%3A36%3A05Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=1af02b11-169c-463d-b441-d2ccfc9f02c8&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=1MOrXMC1UCDsFCNVic%2BTDQyWNVI3E9Cbegdu5aLUMY8%3D&az=oaivgprodscus"
+                    //     type="video/mp4"
+                    // />
+                    :
+                    <source
+                        src="https://videos.openai.com/vg-assets/assets%2Ftask_01jpmyeymfejyaa1efcebf6aef%2Ftask_01jpmyeymfejyaa1efcebf6aef_genid_037bac7f-f4b7-4c8b-8fa7-c0b80bac71ba_25_03_18_15_39_685303%2Fvideos%2F00000_7490631%2Fmd.mp4?st=2025-09-25T10%3A36%3A05Z&se=2025-10-01T11%3A36%3A05Z&sks=b&skt=2025-09-25T10%3A36%3A05Z&ske=2025-10-01T11%3A36%3A05Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=1af02b11-169c-463d-b441-d2ccfc9f02c8&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=1MOrXMC1UCDsFCNVic%2BTDQyWNVI3E9Cbegdu5aLUMY8%3D&az=oaivgprodscus"
+                        type="video/mp4"
+                    />
+
+                }
             </video>
 
+            {/* Overlay Text */}
+            <Box
+                sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    color: "white",
+                    textAlign: "center",
+                    zIndex: 2,
+                    display: "flex",
+                    flexDirection: { xs: "column", lg: "row" },
+                    gap: 2,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    px: 2,
+                    maxWidth: "90%",
+                }}
+            >
+                {words.map((word, wIdx) => (
+                    <Typography
+                        key={wIdx}
+                        component="h1"
+                        variant={isXs ? "h4" : "h4"}
+                        sx={{
+                            fontWeight: 700,
+                            display: "flex",
+                            gap: 0.5,
+                        }}
+                    >
+                        {word.split("").map((letter, lIdx) => (
+                            <Box
+                                key={lIdx}
+                                component="span"
+                                sx={{
+                                    opacity: 0,
+                                    display: "inline-block",
+                                    filter: "blur(8px)",
+                                    animation: `blurReveal 0.6s forwards`,
+                                    animationDelay: `${(wIdx * word.length + lIdx) * 0.06}s`,
+                                }}
+                            >
+                                {letter}
+                            </Box>
+                        ))}
+                    </Typography>
+                ))}
+            </Box>
 
-        </Box >
+            {/* CSS animation */}
+            <style>
+                {`
+          @keyframes blurReveal {
+            0% {
+              opacity: 0;
+              filter: blur(8px);
+              transform: translateY(10px);
+            }
+            100% {
+              opacity: 1;
+              filter: blur(0);
+              transform: translateY(0);
+            }
+          }
+        `}
+            </style>
+        </Box>
     );
 };
 

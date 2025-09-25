@@ -56,7 +56,7 @@ const CustomPricing = ({ pricings, onSelect }) => {
                                         display: "flex",
                                         flexDirection: "column",
                                         justifyContent: "space-between",
-                                        minHeight: 250,
+                                        minHeight: { xs: 'auto', md: 250 },
                                         transition: "all 0.3s ease",
                                         "&:hover": hasPrice
                                             ? {

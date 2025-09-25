@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { Card } from '@mui/material';
+import Close from '@mui/icons-material/Close';
 
 const EditOfferingsModal = ({ open, handleClose, initialValue = [], onSave }) => {
 
@@ -39,23 +40,22 @@ const EditOfferingsModal = ({ open, handleClose, initialValue = [], onSave }) =>
             open={open}
             onClose={handleClose}
             fullWidth
+            fullScreen
             maxWidth="md"
-            PaperProps={{ sx: { borderRadius: 3, p: 2 } }}
+            PaperProps={{ sx: { borderRadius: 3, p: 0 } }}
         >
-            <DialogTitle sx={{ bgcolor: "#eeee", }}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        flexDirection: "row",
-                        gap: 1              // spacing between items
-                    }}
-                >
-                    <Typography variant="h6" component="span">
-                        Edit Offerings
-                    </Typography>
 
+            <DialogTitle sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                {/* First row: Title + Close Icon */}
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography variant="h6">Edit Offerings</Typography>
+                    <IconButton onClick={handleClose}>
+                        <Close />
+                    </IconButton>
+                </Box>
+
+                {/* Second row: Add Field button */}
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button
                         variant="outlined"
                         size="small"

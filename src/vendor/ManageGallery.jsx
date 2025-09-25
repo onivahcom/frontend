@@ -71,6 +71,7 @@ const ManageGallery = () => {
                         if (service) {
                             setSelectedServiceId(serviceIdFromState);
                             setSelectedService(service);
+                            setOpenDialog(true)
                         }
                     }
                 }

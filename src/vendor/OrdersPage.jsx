@@ -243,22 +243,29 @@ export default function OrdersPage() {
                                 </Stack>
 
                                 {/* Middle Row: Amount + Date */}
-                                <Stack direction="row" justifyContent="space-between" mb={1}>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Amount
-                                    </Typography>
-                                    <Typography variant="body2" fontWeight={500}>
-                                        {formatAmount(b.amount)}
-                                    </Typography>
-                                </Stack>
+                                <Stack spacing={1} sx={{ p: 2, borderRadius: 2, boxShadow: 0, bgcolor: 'background.paper' }}>
+                                    {/* Amount Row */}
+                                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                                        <Typography variant="subtitle2" color="text.secondary">
+                                            Amount
+                                        </Typography>
+                                        <Typography variant="h6" fontWeight={600} color="primary">
+                                            {formatAmount(b.amount)}
+                                        </Typography>
+                                    </Stack>
 
-                                <Stack direction="row" justifyContent="space-between" mb={2}>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Date
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        {new Date(b.createdAt).toLocaleString()}
-                                    </Typography>
+                                    {/* Divider */}
+                                    <Divider sx={{ my: 0.5 }} />
+
+                                    {/* Date Row */}
+                                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                                        <Typography variant="subtitle2" color="text.secondary">
+                                            Date
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {new Date(b.createdAt).toLocaleString()}
+                                        </Typography>
+                                    </Stack>
                                 </Stack>
 
                                 {/* Action Button */}
@@ -473,7 +480,7 @@ export default function OrdersPage() {
                     >
                         <Grid container spacing={3} sx={{ height: "100%" }}>
                             {/* Left Column: Booking Info */}
-                            <Grid item xs={12} md={5} sx={{ height: "100%" }}>
+                            <Grid item xs={12} md={5} sx={{ height: { xs: 'auto', md: '100%' } }}>
                                 <Paper elevation={0} sx={{ p: 3, borderRadius: 2, display: "flex", flexDirection: "column", gap: 2, height: "100%", border: '1px solid #dddd' }}>
                                     {/* Booking ID & Status */}
                                     <Stack
@@ -550,7 +557,7 @@ export default function OrdersPage() {
                                     display: "flex",
                                     flexDirection: "column",
                                     gap: 2,
-                                    height: "100%", // adjust based on DialogTitle height
+                                    height: { xs: "auto", md: "100%" }, // adjust based on DialogTitle height
                                     overflowY: "auto", // scrollbar only appears when content overflows
                                 }}
                             >

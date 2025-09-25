@@ -390,7 +390,7 @@ const AvailableDates = () => {
                 </Stack>
 
                 {/* colors description */}
-                <Stack direction="row" spacing={3} sx={{ width: "100%", justifyContent: "center" }}>
+                <Stack direction="row" spacing={3} sx={{ width: "100%", justifyContent: "center", p: 1, }}>
                     {colors_Details.map((cat, index) => (
                         <Stack key={index} direction="row" spacing={1} alignItems="center">
                             <Box
@@ -401,7 +401,7 @@ const AvailableDates = () => {
                                     borderRadius: 2,
                                 }}
                             />
-                            <Typography variant="body2">{cat.label}</Typography>
+                            <Typography variant="caption">{cat.label}</Typography>
                         </Stack>
                     ))}
                 </Stack>

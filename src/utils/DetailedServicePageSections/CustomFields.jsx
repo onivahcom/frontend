@@ -37,7 +37,7 @@ const CustomFields = ({ fields }) => {
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
-                                    minHeight: 250,
+                                    minHeight: { xs: 'auto', md: 250 },
                                 }}
                             >
                                 {/* Field Title */}

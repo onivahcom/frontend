@@ -780,7 +780,7 @@ const Header = ({ loading, setLoading, error, setError }) => {
                                 justifyContent: 'space-between',
                                 alignItems: { xs: 'none', md: "center" },
                                 mb: { xs: 1, md: 0 },
-                                bgcolor: isMobile ? '#f8f8f8' : "none",
+                                bgcolor: isMobile ? 'none' : "none",
                                 borderBottom: isMobile ? '1px solid #f8f8f8' : "none",
                                 '& .menu-icon': { color: 'grey' },
                                 '&:hover': {
@@ -820,7 +820,7 @@ const Header = ({ loading, setLoading, error, setError }) => {
                 maxWidth={false} >
                 <DialogContent sx={{ padding: 0, maxWidth: 900, bgcolor: "#ffff", }} fullWidth>
 
-                    <Grid container spacing={2}>
+                    <Grid container spacing={{ xs: 0, md: 2 }}>
 
                         {/* Left Side Image */}
 
@@ -843,8 +843,8 @@ const Header = ({ loading, setLoading, error, setError }) => {
                         </Grid>
 
                         {/* Right Side Content */}
-                        <Grid item xs={12} md={6} sx={{ p: 2 }}>
-                            <Box sx={{ p: 2 }}>
+                        <Grid item xs={12} md={6} sx={{ p: { xs: 1, md: 2 } }}>
+                            <Box sx={{ p: 0 }}>
                                 <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', }}>
                                     {loginOpen ? "Log In" : "Sign Up"}
                                     <IconButton
@@ -1176,7 +1176,7 @@ const Header = ({ loading, setLoading, error, setError }) => {
                         color: '#000', // text/icon color
 
                         p: 1,
-                        zIndex: 99999,
+                        zIndex: 999,
                         borderTop: '1px solid #ddd',
                         borderTopRightRadius: 20,
                         borderTopLeftRadius: 20,

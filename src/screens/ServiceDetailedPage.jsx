@@ -231,6 +231,7 @@ const ServiceDetailedPage = ({ loading, setLoading, error, setError }) => {
         if (!parsedChoice.location || parsedChoice.location.length === 0) missingFields.push("Location");
         if (!selectedPackage || Object.keys(selectedPackage).length === 0) missingFields.push("Package");
         if (!parsedChoice.datesChoosed || parsedChoice.datesChoosed.length === 0) missingFields.push("Date");
+        if (!parsedChoice.datesChoosed || parsedChoice.datesChoosed.length === 0) missingFields.push("Date");
 
         if (missingFields.length > 0) {
             alert(`Please fill/select the following fields before proceeding:\n- ${missingFields.join("\n- ")}`);
@@ -441,7 +442,7 @@ const ServiceDetailedPage = ({ loading, setLoading, error, setError }) => {
                                         borderTopLeftRadius: { xs: 16, md: 16 },
                                         borderTopRightRadius: { xs: 16, md: 0 },
                                         borderBottomLeftRadius: { xs: 16, md: 16 },
-                                        height: { xs: "50vh", md: '100vh' }, // Half screen
+                                        height: { xs: "auto", md: '100vh' }, // Half screen
                                         width: { xs: 'auto', md: 350 },
                                         p: 2,
                                     },
@@ -493,6 +494,9 @@ const ServiceDetailedPage = ({ loading, setLoading, error, setError }) => {
                                                     if (!parsedChoice?.datesChoosed?.length && bookingRef?.current) {
                                                         bookingRef.current.scrollIntoView({ behavior: "smooth" });
                                                     }
+                                                    if (open) {
+                                                        setOpen(false);
+                                                    }
                                                 }}
                                             >
                                                 {parsedChoice?.datesChoosed?.[0]
@@ -510,6 +514,9 @@ const ServiceDetailedPage = ({ loading, setLoading, error, setError }) => {
                                                 onClick={() => {
                                                     if (!parsedChoice?.datesChoosed?.length && bookingRef?.current) {
                                                         bookingRef.current.scrollIntoView({ behavior: "smooth" });
+                                                    }
+                                                    if (open) {
+                                                        setOpen(false);
                                                     }
                                                 }}
                                             >
@@ -893,7 +900,7 @@ const ServiceDetailedPage = ({ loading, setLoading, error, setError }) => {
                         }
 
                         {/* view availablity */}
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={6} ref={bookingRef}>
                             <Card
                                 sx={{
                                     borderRadius: 4,
@@ -920,7 +927,8 @@ const ServiceDetailedPage = ({ loading, setLoading, error, setError }) => {
                                         Select your preferred dates
                                     </Typography>
                                 </Box>
-                                <Box
+                                {/* <Box
+
                                     sx={{
                                         width: "100%",
                                         display: "flex",
@@ -937,12 +945,12 @@ const ServiceDetailedPage = ({ loading, setLoading, error, setError }) => {
                                             fontWeight: 600,
                                         },
                                     }}
-                                >
-                                    <DateStorer onDateChange={handleDateChange}
-                                        bookedDates={serviceDetails?.dates?.booked ?? []}
-                                        availableDates={serviceDetails?.dates?.available ?? []}
-                                    />
-                                </Box>
+                                > */}
+                                <DateStorer onDateChange={handleDateChange}
+                                    bookedDates={serviceDetails?.dates?.booked ?? []}
+                                    availableDates={serviceDetails?.dates?.available ?? []}
+                                />
+                                {/* </Box> */}
                             </Card>
                         </Grid>
 
