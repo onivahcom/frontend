@@ -5,7 +5,7 @@ export default function Booking() {
     const [amount, setAmount] = useState(1000);
 
     const handleBook = async () => {
-        const { data } = await axios.post('http://localhost:4000/api/payments/book', {
+        const { data } = await axios.post('https://backend.onivah.com/api/payments/book', {
             userId: 'user1234',
             hostId: 'host1234',
             amount
@@ -23,7 +23,7 @@ export default function Booking() {
             handler: function (response) {
                 alert('Payment Authorized! Payment ID: ' + response.razorpay_payment_id);
                 try {
-                    const res = axios.post('http://localhost:4000/api/payments/save-payment', {
+                    const res = axios.post('https://backend.onivah.com/api/payments/save-payment', {
                         userId: 'user123',
                         hostId: 'host123',
                         amount,

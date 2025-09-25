@@ -5,20 +5,20 @@ export default function VendorAccept() {
     const [bookings, setBookings] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/payments/get-bookings?vendorId=host1234')
+        axios.get('https://backend.onivah.com/api/payments/get-bookings?vendorId=host1234')
             .then(res => setBookings(res.data))
             .catch(err => console.error(err));
     }, []);
 
     const approveBooking = async (id) => {
-        await axios.post(`http://localhost:4000/api/payments/booking/${id}/approve`);
+        await axios.post(`https://backend.onivah.com/api/payments/booking/${id}/approve`);
         alert('Booking approved & payment captured!');
         // refresh list
         setBookings(bookings.filter(b => b._id !== id));
     };
 
     const rejectBooking = async (id) => {
-        await axios.post(`http://localhost:4000/api/payments/booking/${id}/reject`);
+        await axios.post(`https://backend.onivah.com/api/payments/booking/${id}/reject`);
         alert('Booking rejected');
         setBookings(bookings.filter(b => b._id !== id));
     };

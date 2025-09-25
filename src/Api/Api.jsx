@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 // base url
-export const apiUrl = 'http://localhost:4000';
+export const apiUrl = 'https://backend.onivah.com';
 
 export const backendApi = axios.create({
-    baseURL: `http://localhost:4000`,
+    baseURL: `https://backend.onivah.com`,
     withCredentials: true,
 });
 
 //admin
 const adminAxios = axios.create({
-    baseURL: `http://localhost:4000/admin`,
+    baseURL: `https://backend.onivah.com/admin`,
     withCredentials: true,
 });
 
